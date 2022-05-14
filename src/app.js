@@ -75,8 +75,7 @@ app.post("/api/repos", async (req, res) => {
 });
 
 app.post("/api/login", async (req, res) => {
-  const code = req.query.code;
-  const access_token = await getAccessToken(req, code);
+  const access_token = await getAccessToken(req.query.code);
   return res.send({ access_token });
 });
 
