@@ -63,7 +63,7 @@ export async function commit(accessToken, user, repo, commit) {
     )
     .then((res) => res)
     .catch((error) => {
-      console.error(`Error creating repo in GitHub`);
+      console.error(`Error committing a change to GitHub`);
       throw error;
     });
 }
