@@ -37,7 +37,7 @@ export async function createRepo(accessToken, name, isPrivate) {
         name,
         auto_init: true,
         private: isPrivate,
-        gitignore_template: "nanoc",
+        gitignore_template: "Python",
       },
       { headers: { Authorization: `token ${accessToken}` } }
     )
