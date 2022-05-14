@@ -1,7 +1,5 @@
 import dotenv from "dotenv";
 dotenv.config();
-import pkg from "lodash";
-const { get } = pkg;
 import axios from "axios";
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
@@ -71,7 +69,7 @@ export async function commit(accessToken, user, repo, commit) {
 }
 
 export async function getAccessToken(req) {
-  const code = get(req, "query.code");
+  const code = req.query.code;
   const githubToken = await axios
     .post(
       `https://github.com/login/oauth/access_token?client_id=${GITHUB_CLIENT_ID}&client_secret=${GITHUB_CLIENT_SECRET}&code=${code}`,

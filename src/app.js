@@ -2,8 +2,6 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import jwt from "jsonwebtoken";
-import pkg from "lodash";
-const { get } = pkg;
 import cors from "cors";
 import bodyParser from "body-parser";
 import {
@@ -32,7 +30,7 @@ app.use(
 );
 
 app.get("/api/me", (req, res) => {
-  const cookie = get(req, `cookies[${COOKIE_NAME}]`);
+  const cookie = req.cookies[COOKIE_NAME];
 
   try {
     const decode = jwt.verify(cookie, COOKIE_SECRET);
@@ -77,7 +75,7 @@ app.post("/api/repos", async (req, res) => {
 });
 
 app.post("/api/login", async (req, res) => {
-  const code = get(req, "query.code");
+  const code = req.query.code;
   const access_token = await getAccessToken(req, code);
   return res.send({ access_token });
 });
