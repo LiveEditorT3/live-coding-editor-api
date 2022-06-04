@@ -6,9 +6,9 @@ import {
   getFilesFromRepo,
   getFile
 } from "./handlers/github.js";
-import { decodeToken, login } from './handlers/login';
+import { decodeToken, login } from './handlers/login.js';
 
-export const setupEndpoints = (app) => {
+export function setupEndpoints(app) {
   app.get("/api/me", (req, res) => {
     console.log('Decoding token');
     return decodeToken(req, res);
@@ -49,6 +49,4 @@ export const setupEndpoints = (app) => {
     return getFile(req, res);
   })
 }
-
-
 

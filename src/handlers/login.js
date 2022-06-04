@@ -3,12 +3,12 @@ dotenv.config();
 import jwt from "jsonwebtoken";
 import pkg from "lodash";
 const { get } = pkg;
-import * as githubServices from '../services/github';
+import * as githubServices from '../services/github.js';
 
 const COOKIE_NAME = process.env.COOKIE_NAME;
 const COOKIE_SECRET = process.env.COOKIE_SECRET;
 
-const decodeToken = async (req, res) => {
+async function decodeToken(req, res) {
   const cookie = get(req, `cookies[${COOKIE_NAME}]`);
 
   try {
@@ -20,7 +20,7 @@ const decodeToken = async (req, res) => {
   }
 }
 
-const login = (req, res) => {
+async function login(req, res) {
   const code = get(req, "query.code");
   const access_token = await githubServices.getAccessToken(req, code);
   return res.send({ access_token });

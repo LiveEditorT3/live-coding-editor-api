@@ -7,7 +7,7 @@ import axios from "axios";
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
-export async function getGitHubUser(accessToken) {
+async function getGitHubUser(accessToken) {
   return axios
     .get("https://api.github.com/user", {
       headers: { Authorization: `token ${accessToken}` },
@@ -19,7 +19,7 @@ export async function getGitHubUser(accessToken) {
     });
 }
 
-export async function getUserRepos(accessToken) {
+async function getUserRepos(accessToken) {
   return axios
     .get("https://api.github.com/user/repos?type=owner", {
       headers: { Authorization: `token ${accessToken}` },
@@ -31,7 +31,7 @@ export async function getUserRepos(accessToken) {
     });
 }
 
-export async function createRepo(accessToken, name, isPrivate) {
+async function createRepo(accessToken, name, isPrivate) {
   return axios
     .post(
       "https://api.github.com/user/repos",
@@ -50,7 +50,7 @@ export async function createRepo(accessToken, name, isPrivate) {
     });
 }
 
-export async function commit(accessToken, user, repo, commit) {
+async function commit(accessToken, user, repo, commit) {
   return axios
     .put(
       `https://api.github.com/repos/${user}/${repo}/contents/${commit.path}`,
@@ -70,7 +70,7 @@ export async function commit(accessToken, user, repo, commit) {
     });
 }
 
-export async function getAccessToken(req) {
+async function getAccessToken(req) {
   const code = get(req, "query.code");
   const githubToken = await axios
     .post(
@@ -87,7 +87,7 @@ export async function getAccessToken(req) {
   return githubToken.access_token;
 }
 
-export function getFilesFromRepo(accessToken, user, repo) {
+function getFilesFromRepo(accessToken, user, repo) {
   return axios.get(`https://api.github.com/repos/${user}/${repo}/contents`,
     {
       headers: { Authorization: `token ${accessToken}` },
@@ -98,7 +98,7 @@ export function getFilesFromRepo(accessToken, user, repo) {
     });
 }
 
-export function getFile(accessToken, user, repo, path) {
+function getFile(accessToken, user, repo, path) {
   return axios.get(`https://api.github.com/repos/${user}/${repo}/contents/${path}`,
     {
       headers: { Authorization: `token ${accessToken}` },
@@ -108,3 +108,5 @@ export function getFile(accessToken, user, repo, path) {
       throw error;
     });
 }
+
+export { getGitHubUser, getUserRepos, createRepo, commit, getAccessToken, getFilesFromRepo, getFile };
