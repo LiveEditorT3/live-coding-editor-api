@@ -92,6 +92,7 @@ function getFilesFromRepo(accessToken, user, repo) {
     {
       headers: { Authorization: `token ${accessToken}` },
     })
+    .then(res => res.data)
     .catch((error) => {
       console.error(`Error getting files from repo`);
       throw error;
@@ -103,6 +104,7 @@ function getFile(accessToken, user, repo, path) {
     {
       headers: { Authorization: `token ${accessToken}` },
     })
+    .then(res => ({ ...res.data, content: Buffer.from(res.data.content, 'base64').toString()}))
     .catch((error) => {
       console.error(`Error getting file`);
       throw error;
