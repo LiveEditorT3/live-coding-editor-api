@@ -1,13 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
-import pkg from "lodash";
-const { get } = pkg;
 import axios from "axios";
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
-async function getGitHubUser(accessToken) {
+function getGitHubUser(accessToken) {
   return axios
     .get("https://api.github.com/user", {
       headers: { Authorization: `token ${accessToken}` },
@@ -17,9 +15,9 @@ async function getGitHubUser(accessToken) {
       console.error(`Error getting user from GitHub`);
       throw error;
     });
-}
+};
 
-async function getUserRepos(accessToken) {
+function getUserRepos(accessToken) {
   return axios
     .get("https://api.github.com/user/repos?type=owner", {
       headers: { Authorization: `token ${accessToken}` },
@@ -29,9 +27,9 @@ async function getUserRepos(accessToken) {
       console.error(`Error getting user repos from GitHub`);
       throw error;
     });
-}
+};
 
-async function createRepo(accessToken, name, isPrivate) {
+function createRepo(accessToken, name, isPrivate) {
   return axios
     .post(
       "https://api.github.com/user/repos",
@@ -48,9 +46,9 @@ async function createRepo(accessToken, name, isPrivate) {
       console.error(`Error creating repo in GitHub`);
       throw error;
     });
-}
+};
 
-async function commit(accessToken, user, repo, commit) {
+function commit(accessToken, user, repo, commit) {
   return axios
     .put(
       `https://api.github.com/repos/${user}/${repo}/contents/${commit.path}`,
@@ -68,35 +66,32 @@ async function commit(accessToken, user, repo, commit) {
       console.error(`Error creating repo in GitHub`);
       throw error;
     });
-}
+};
 
-async function getAccessToken(req) {
-  const code = get(req, "query.code");
-  const githubToken = await axios
+function getAccessToken(req) {
+  return axios
     .post(
-      `https://github.com/login/oauth/access_token?client_id=${GITHUB_CLIENT_ID}&client_secret=${GITHUB_CLIENT_SECRET}&code=${code}`,
+      `https://github.com/login/oauth/access_token?client_id=${GITHUB_CLIENT_ID}&client_secret=${GITHUB_CLIENT_SECRET}&code=${req.query.code}`,
       null,
       { headers: { Accept: "application/json" } }
     )
-    .then((res) => res.data)
-
+    .then((res) => res.data.access_token)
     .catch((error) => {
       throw error;
     });
-
-  return githubToken.access_token;
-}
+};
 
 function getFilesFromRepo(accessToken, user, repo) {
   return axios.get(`https://api.github.com/repos/${user}/${repo}/contents`,
     {
       headers: { Authorization: `token ${accessToken}` },
     })
+    .then(res => res.data)
     .catch((error) => {
       console.error(`Error getting files from repo`);
       throw error;
     });
-}
+};
 
 function getFile(accessToken, user, repo, path) {
   return axios.get(`https://api.github.com/repos/${user}/${repo}/contents/${path}`,
@@ -107,6 +102,6 @@ function getFile(accessToken, user, repo, path) {
       console.error(`Error getting file`);
       throw error;
     });
-}
+};
 
 export { getGitHubUser, getUserRepos, createRepo, commit, getAccessToken, getFilesFromRepo, getFile };

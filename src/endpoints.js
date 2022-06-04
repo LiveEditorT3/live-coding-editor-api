@@ -39,10 +39,10 @@ export function setupEndpoints(app) {
     return commitFile(req, res);
   });
 
-  app.get("/api/:username/repos/:repo/files"), (req, res) => {
+  app.get("/api/:username/repos/:repo/files", (req, res) => {
     console.log('Getting repo file');
     return getFilesFromRepo(req, res);
-  };
+  });
 
   app.get("/api/:username/repos/:repo/:filepath", (req, res) => {
     console.log('Getting file content');

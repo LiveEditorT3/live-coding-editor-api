@@ -1,6 +1,5 @@
 import * as githubServices from '../services/github.js';
 
-
 async function getUser(req, res) {
   try {
     const user = await githubServices.getGitHubUser(req.headers.authorization);

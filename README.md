@@ -15,3 +15,7 @@ You also need a secure non-guessable string for signing the JWT cookie used for 
 ### Start the API server in development mode
 
 `npm run dev`
+
+### Run unit tests
+
+`npm run test`
