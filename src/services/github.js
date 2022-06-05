@@ -98,6 +98,7 @@ function getFile(accessToken, user, repo, path) {
     {
       headers: { Authorization: `token ${accessToken}` },
     })
+    .then(res => ({ ...res.data, content: Buffer.from(res.data.content, 'base64').toString()}))
     .catch((error) => {
       console.error(`Error getting file`);
       throw error;

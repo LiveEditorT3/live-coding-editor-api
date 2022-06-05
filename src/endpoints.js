@@ -44,7 +44,7 @@ export function setupEndpoints(app) {
     return getFilesFromRepo(req, res);
   });
 
-  app.get("/api/:username/repos/:repo/:filepath", (req, res) => {
+  app.get("/api/:username/repos/:repo/files/:path", (req, res) => {
     console.log('Getting file content');
     return getFile(req, res);
   })
