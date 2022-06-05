@@ -3,7 +3,7 @@ import * as githubServices from "../../services/github";
 
 jest.mock("axios");
 
-testGithubError = async (httpMethod, functionName) => {
+const testGithubError = async (httpMethod, functionName) => {
   const githubError = { message: "Github Error" };
   axios[httpMethod].mockRejectedValue(githubError);
   expect.assertions(1);
