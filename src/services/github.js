@@ -37,7 +37,6 @@ function createRepo(accessToken, name, isPrivate) {
         name,
         auto_init: true,
         private: isPrivate,
-        gitignore_template: "nanoc",
       },
       { headers: { Authorization: `token ${accessToken}` } }
     )

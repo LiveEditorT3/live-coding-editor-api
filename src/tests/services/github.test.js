@@ -96,7 +96,6 @@ describe("GitHub services", () => {
           name: repo,
           auto_init: true,
           private: isPrivate,
-          gitignore_template: "nanoc",
         },
         { headers: { Authorization: `token ${githubToken}` } })
     })
