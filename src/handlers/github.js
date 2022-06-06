@@ -16,8 +16,8 @@ function handleAxiosError(res, error) {
   } else {
     // Something happened in setting up the request that triggered an Error
     console.log('Error', error.message);
-    // Return a 400 Bad Request to the client in all cases
-    return res.status(400).send();
+    // Return a 500 Internal Server Error to the client in all cases
+    return res.status(500).send();
   }
 }
 
