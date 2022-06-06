@@ -10,7 +10,7 @@ function getGitHubUser(accessToken) {
     .get("https://api.github.com/user", {
       headers: { Authorization: `token ${accessToken}` },
     })
-    .then((res) => res.data)
+    .then(({ data }) => data)
     .catch((error) => {
       console.error(`Error getting user from GitHub`);
       throw error;
@@ -22,7 +22,7 @@ function getUserRepos(accessToken) {
     .get("https://api.github.com/user/repos?type=owner", {
       headers: { Authorization: `token ${accessToken}` },
     })
-    .then((res) => res.data)
+    .then(({ data }) => data)
     .catch((error) => {
       console.error(`Error getting user repos from GitHub`);
       throw error;
@@ -75,7 +75,7 @@ function getAccessToken(req) {
       null,
       { headers: { Accept: "application/json" } }
     )
-    .then((res) => res.data.access_token)
+    .then(({ data }) => data.access_token)
     .catch((error) => {
       throw error;
     });
