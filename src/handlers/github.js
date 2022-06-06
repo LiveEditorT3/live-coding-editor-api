@@ -7,7 +7,7 @@ function handleAxiosError(res, error) {
     console.log(error.response.headers);
     console.log(error.response.data);
     // Forward the error code from GitHub to the client
-    return res.status(error.response.status).send()
+    return res.status(error.response.status).send();
   } else if (error.request) {
     // The request was made but no response was received
     console.log(error.request);
@@ -15,7 +15,7 @@ function handleAxiosError(res, error) {
     return res.status(404).send();
   } else {
     // Something happened in setting up the request that triggered an Error
-    console.log('Error', error.message);
+    console.log("Error", error.message);
     // Return a 500 Internal Server Error to the client in all cases
     return res.status(500).send();
   }
