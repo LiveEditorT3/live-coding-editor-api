@@ -19,8 +19,7 @@ async function decodeToken(req, res) {
 }
 
 async function login(req, res) {
-  const code = get(req, "query.code");
-  const access_token = await githubServices.getAccessToken(req, code);
+  const access_token = await githubServices.getAccessToken(req);
   return res.send({ access_token });
 }
 
