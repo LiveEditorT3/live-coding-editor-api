@@ -15,7 +15,7 @@ function getGitHubUser(accessToken) {
       console.error(`Error getting user from GitHub`);
       throw error;
     });
-};
+}
 
 function getUserRepos(accessToken) {
   return axios
@@ -27,7 +27,7 @@ function getUserRepos(accessToken) {
       console.error(`Error getting user repos from GitHub`);
       throw error;
     });
-};
+}
 
 function createRepo(accessToken, name, isPrivate) {
   return axios
@@ -45,7 +45,7 @@ function createRepo(accessToken, name, isPrivate) {
       console.error(`Error creating repo in GitHub`);
       throw error;
     });
-};
+}
 
 function commit(accessToken, user, repo, commit) {
   return axios
@@ -65,7 +65,7 @@ function commit(accessToken, user, repo, commit) {
       console.error(`Error creating repo in GitHub`);
       throw error;
     });
-};
+}
 
 function getAccessToken(req) {
   return axios
@@ -78,30 +78,41 @@ function getAccessToken(req) {
     .catch((error) => {
       throw error;
     });
-};
+}
 
 function getFilesFromRepo(accessToken, user, repo) {
-  return axios.get(`https://api.github.com/repos/${user}/${repo}/contents`,
-    {
+  return axios
+    .get(`https://api.github.com/repos/${user}/${repo}/contents`, {
       headers: { Authorization: `token ${accessToken}` },
     })
-    .then(res => res.data)
+    .then((res) => res.data)
     .catch((error) => {
       console.error(`Error getting files from repo`);
       throw error;
     });
-};
+}
 
 function getFile(accessToken, user, repo, path) {
-  return axios.get(`https://api.github.com/repos/${user}/${repo}/contents/${path}`,
-    {
+  return axios
+    .get(`https://api.github.com/repos/${user}/${repo}/contents/${path}`, {
       headers: { Authorization: `token ${accessToken}` },
     })
-    .then(res => ({ ...res.data, content: Buffer.from(res.data.content, 'base64').toString()}))
+    .then((res) => ({
+      ...res.data,
+      content: Buffer.from(res.data.content, "base64").toString(),
+    }))
     .catch((error) => {
       console.error(`Error getting file`);
       throw error;
     });
-};
+}
 
-export { getGitHubUser, getUserRepos, createRepo, commit, getAccessToken, getFilesFromRepo, getFile };
+export {
+  getGitHubUser,
+  getUserRepos,
+  createRepo,
+  commit,
+  getAccessToken,
+  getFilesFromRepo,
+  getFile,
+};

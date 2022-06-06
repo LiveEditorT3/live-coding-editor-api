@@ -1,4 +1,4 @@
-import * as githubServices from '../services/github.js';
+import * as githubServices from "../services/github.js";
 
 async function getUser(req, res) {
   try {
@@ -7,7 +7,7 @@ async function getUser(req, res) {
   } catch (e) {
     return res.status(404).send();
   }
-};
+}
 
 async function getRepos(req, res) {
   try {
@@ -17,7 +17,7 @@ async function getRepos(req, res) {
     console.log(e);
     return res.status(404).send();
   }
-};
+}
 
 async function createRepo(req, res) {
   try {
@@ -31,7 +31,7 @@ async function createRepo(req, res) {
     console.log(e);
     return res.status(404).send();
   }
-};
+}
 
 async function commitFile(req, res) {
   try {
@@ -46,21 +46,30 @@ async function commitFile(req, res) {
     console.log(e);
     return res.status(404).send();
   }
-};
+}
 
 async function getFilesFromRepo(req, res) {
   try {
-    const files = await githubServices.getFilesFromRepo(req.headers.authorization, req.params.username, req.params.repo);
+    const files = await githubServices.getFilesFromRepo(
+      req.headers.authorization,
+      req.params.username,
+      req.params.repo
+    );
     return res.send(files);
   } catch (e) {
     console.log(e);
     return res.status(404).send();
   }
-};
+}
 
 async function getFile(req, res) {
   try {
-    const file = await githubServices.getFile(req.headers.authorization, req.params.username, req.params.repo, req.params.path);
+    const file = await githubServices.getFile(
+      req.headers.authorization,
+      req.params.username,
+      req.params.repo,
+      req.params.path
+    );
     return res.send(file);
   } catch (e) {
     console.log(e);

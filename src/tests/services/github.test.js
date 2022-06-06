@@ -8,11 +8,10 @@ const testGithubError = async (httpMethod, functionName) => {
   axios[httpMethod].mockRejectedValue(githubError);
   expect.assertions(1);
 
-  return githubServices[functionName]("some-token")
-    .catch(error => {
-      expect(error).toStrictEqual(githubError);
-    });
-}
+  return githubServices[functionName]("some-token").catch((error) => {
+    expect(error).toStrictEqual(githubError);
+  });
+};
 
 describe("GitHub services", () => {
   const githubToken = "some-token";
@@ -30,12 +29,10 @@ describe("GitHub services", () => {
       axios.get.mockResolvedValue({ data: { user: "some-username" } });
 
       await githubServices.getGitHubUser(githubToken);
-      expect(axios.get).toHaveBeenCalledWith(
-        "https://api.github.com/user",
-        {
-          headers: { Authorization: `token ${githubToken}` },
-        })
-    })
+      expect(axios.get).toHaveBeenCalledWith("https://api.github.com/user", {
+        headers: { Authorization: `token ${githubToken}` },
+      });
+    });
 
     test("Check response", async () => {
       const axiosResponse = { data: { user: "some-username" } };
@@ -43,7 +40,7 @@ describe("GitHub services", () => {
 
       const response = await githubServices.getGitHubUser(githubToken);
       expect(response).toStrictEqual(axiosResponse.data);
-    })
+    });
   });
 
   describe("getUserRepos", () => {
@@ -59,8 +56,9 @@ describe("GitHub services", () => {
         "https://api.github.com/user/repos?type=owner",
         {
           headers: { Authorization: `token ${githubToken}` },
-        })
-    })
+        }
+      );
+    });
 
     test("Check response", async () => {
       const axiosResponse = { data: { repos: ["some-repo-name"] } };
@@ -68,7 +66,7 @@ describe("GitHub services", () => {
 
       const response = await githubServices.getUserRepos(githubToken);
       expect(response).toStrictEqual(axiosResponse.data);
-    })
+    });
   });
 
   describe("createRepo", () => {
@@ -80,8 +78,9 @@ describe("GitHub services", () => {
       axios.post.mockRejectedValue(githubError);
       expect.assertions(1);
 
-      return githubServices.createRepo(githubToken, repo, isPrivate)
-        .catch(error => {
+      return githubServices
+        .createRepo(githubToken, repo, isPrivate)
+        .catch((error) => {
           expect(error).toStrictEqual(githubError);
         });
     });
@@ -97,8 +96,9 @@ describe("GitHub services", () => {
           auto_init: true,
           private: isPrivate,
         },
-        { headers: { Authorization: `token ${githubToken}` } })
-    })
+        { headers: { Authorization: `token ${githubToken}` } }
+      );
+    });
 
     test("Check response", async () => {
       const axiosResponse = { statusCode: 201, data: {} };
@@ -106,16 +106,16 @@ describe("GitHub services", () => {
 
       const response = await githubServices.createRepo(githubToken);
       expect(response).toStrictEqual(axiosResponse);
-    })
+    });
   });
 
   describe("commit", () => {
     const username = "some-username";
-    const repo = "some-repo"
+    const repo = "some-repo";
     const commit = {
       path: "/some/path",
       message: "some-message",
-      content: "Some text"
+      content: "Some text",
     };
 
     test("Github error", () => {
@@ -123,8 +123,9 @@ describe("GitHub services", () => {
       axios.put.mockRejectedValue(githubError);
       expect.assertions(1);
 
-      return githubServices.commit(githubToken, username, repo, commit)
-        .catch(error => {
+      return githubServices
+        .commit(githubToken, username, repo, commit)
+        .catch((error) => {
           expect(error).toStrictEqual(githubError);
         });
     });
@@ -143,30 +144,37 @@ describe("GitHub services", () => {
           content: Buffer.from(commit.content).toString("base64"),
         },
         { headers: { Authorization: `token ${githubToken}` } }
-      )
+      );
     });
 
     test("Check response", async () => {
       const axiosResponse = { statusCode: 200, data: {} };
       axios.post.mockResolvedValue(axiosResponse);
 
-      const response = await githubServices.commit(githubToken, username, repo, commit);
+      const response = await githubServices.commit(
+        githubToken,
+        username,
+        repo,
+        commit
+      );
       expect(response).toStrictEqual(axiosResponse);
-    })
+    });
   });
 
   describe("getAccessToken", () => {
-    const request = { query: { code: 'some-code' } };
-    const axiosResponse = { statusCode: 200, data: { access_token: githubToken } };
+    const request = { query: { code: "some-code" } };
+    const axiosResponse = {
+      statusCode: 200,
+      data: { access_token: githubToken },
+    };
     test("Github error", () => {
       const githubError = { message: "Github Error" };
       axios.post.mockRejectedValue(githubError);
       expect.assertions(1);
 
-      return githubServices.getAccessToken(request)
-        .catch(error => {
-          expect(error).toStrictEqual(githubError);
-        });
+      return githubServices.getAccessToken(request).catch((error) => {
+        expect(error).toStrictEqual(githubError);
+      });
     });
 
     test("Check axios call", async () => {
@@ -177,14 +185,14 @@ describe("GitHub services", () => {
         `https://github.com/login/oauth/access_token?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}&code=${request.query.code}`,
         null,
         { headers: { Accept: "application/json" } }
-      )
-    })
+      );
+    });
 
     test("Check response", async () => {
       axios.post.mockResolvedValue(axiosResponse);
 
       const response = await githubServices.getAccessToken(request);
       expect(response).toBe(axiosResponse.data.access_token);
-    })
+    });
   });
 });
