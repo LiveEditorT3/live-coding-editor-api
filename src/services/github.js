@@ -57,7 +57,7 @@ function commit(accessToken, user, repo, commit) {
         path: commit.path,
         message: commit.message,
         content: Buffer.from(commit.content).toString("base64"),
-        ...(commit.sha ? { sha: commit.sha } : {})
+        ...(commit.sha ? { sha: commit.sha } : {}),
       },
       { headers: { Authorization: `token ${accessToken}` } }
     )
