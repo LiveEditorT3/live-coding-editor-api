@@ -12,7 +12,7 @@ function getGitHubUser(accessToken) {
     })
     .then(({ data }) => data)
     .catch((error) => {
-      console.error(`Error getting user from GitHub`);
+      console.error("Error getting user from GitHub");
       throw error;
     });
 }
@@ -24,7 +24,7 @@ function getUserRepos(accessToken) {
     })
     .then(({ data }) => data)
     .catch((error) => {
-      console.error(`Error getting user repos from GitHub`);
+      console.error("Error getting user repos from GitHub");
       throw error;
     });
 }
@@ -42,7 +42,7 @@ function createRepo(accessToken, name, isPrivate) {
     )
     .then((res) => res)
     .catch((error) => {
-      console.error(`Error creating repo in GitHub`);
+      console.error("Error creating repo in GitHub");
       throw error;
     });
 }
@@ -62,7 +62,7 @@ function commit(accessToken, user, repo, commit) {
     )
     .then((res) => res)
     .catch((error) => {
-      console.error(`Error creating repo in GitHub`);
+      console.error("Error committing a change to GitHub");
       throw error;
     });
 }
@@ -87,7 +87,7 @@ function getFilesFromRepo(accessToken, user, repo) {
     })
     .then((res) => res.data)
     .catch((error) => {
-      console.error(`Error getting files from repo`);
+      console.error("Error getting files from repo");
       throw error;
     });
 }
@@ -102,7 +102,7 @@ function getFile(accessToken, user, repo, path) {
       content: Buffer.from(res.data.content, "base64").toString(),
     }))
     .catch((error) => {
-      console.error(`Error getting file`);
+      console.error("Error getting file");
       throw error;
     });
 }
