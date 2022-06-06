@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import jwt from "jsonwebtoken";
-import * as githubServices from "../services/github.js";
+import { getAccessToken } from "../services/github.js";
 
 const COOKIE_NAME = process.env.COOKIE_NAME;
 const COOKIE_SECRET = process.env.COOKIE_SECRET;
@@ -19,7 +19,7 @@ async function decodeToken(req, res) {
 }
 
 async function login(req, res) {
-  const access_token = await githubServices.getAccessToken(req);
+  const access_token = await getAccessToken(req);
   return res.send({ access_token });
 }
 
