@@ -19,3 +19,7 @@ You also need a secure non-guessable string for signing the JWT cookie used for 
 ### Run unit tests
 
 `npm run test`
+
+### Deployment
+
+The API server is deployed to Heroku as "live-coding-editor-api".
