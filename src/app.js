@@ -9,6 +9,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const PORT = process.env.PORT;
 const UI_URL = process.env.UI_URL;
 
 app.use(
@@ -20,6 +21,6 @@ app.use(
 
 setupEndpoints(app);
 
-app.listen(API_PORT, () => {
-  console.log(`Server is listening on port ${API_PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
 });
