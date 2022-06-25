@@ -14,7 +14,8 @@ const UI_URL = process.env.UI_URL;
 
 app.use(
   cors({
-    origin: UI_URL
+    origin: UI_URL,
+    credentials: true
   })
 );
 
