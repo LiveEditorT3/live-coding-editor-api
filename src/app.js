@@ -9,13 +9,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const UI_HOST = process.env.UI_HOST;
-const UI_PORT = process.env.UI_PORT;
-const API_PORT = process.env.API_PORT;
+const UI_URL = process.env.UI_URL;
 
 app.use(
   cors({
-    origin: `http://${UI_HOST}:${UI_PORT}`,
+    origin: UI_URL,
     credentials: true,
   })
 );
