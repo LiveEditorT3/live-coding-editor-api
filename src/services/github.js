@@ -1,6 +1,6 @@
+import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
-import axios from "axios";
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
@@ -61,7 +61,7 @@ function commit(accessToken, user, repo, commit) {
       },
       { headers: { Authorization: `token ${accessToken}` } }
     )
-    .then((res) => res)
+    .then((res) => res.data)
     .catch((error) => {
       console.error("Error committing a change to GitHub");
       throw error;

@@ -54,13 +54,13 @@ async function createRepo(req, res) {
 
 async function commitFile(req, res) {
   try {
-    await githubServices.commit(
+    const response = await githubServices.commit(
       req.headers.authorization,
       req.params.username,
       req.params.repo,
       req.body
     );
-    return res.status(201).send();
+    return res.status(200).send(response);
   } catch (e) {
     return handleAxiosError(res, e);
   }
